@@ -31,13 +31,27 @@ class TimerButton extends Component {
 				this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 				if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 })))) {
 					clearInterval(restinterval);
-					if (this.state.cunter > 0) {
+					if (this.state.cunter > 0)
 						this.start();
-					}
+					else if (this.state.cunter <= 0)
+						this.wait();
 				}
 			}, 10);
 		});
 	}
+
+
+	wait() {
+		this.setState({ currentTime: moment().hours(0).minutes(30).seconds(0) });
+		this.setState({ title: "Rest" });
+		var lastInterval = setInterval(() => {
+			this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
+			if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 }))))
+				clearInterval(lastInterval);
+		}, 10);
+	}
+
+
 	handleStart = () => {
 		console.clear();
 		this.start();
