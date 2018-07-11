@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import condition from 'promise-conditional';
 
 class TimerButton extends Component {
 	constructor(props) {
