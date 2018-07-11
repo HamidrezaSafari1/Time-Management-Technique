@@ -25,6 +25,10 @@ class Timer extends Component {
         this.setState({ currentTime: this.state.currentTime.minute(parseInt(event.target.value)) });
         break;
       }
+      case "second": {
+        this.setState({ currentTime: this.state.currentTime.second(parseInt(event.target.value)) });
+        break;
+      }
     }
   }
 
@@ -62,7 +66,7 @@ class Timer extends Component {
                   <label htmlFor="hours"> Seconds </label>
                 </div>
                 <div className="col-md-9">
-                  <input id="minute" className="form-control" type="number" defaultValue={parseInt(currentTime.format('ss'))} onChange={this.handleChange} />
+                  <input id="second" className="form-control" type="number" defaultValue={parseInt(currentTime.format('ss'))} onChange={this.handleChange} />
                 </div>
               </div>
             </div>
