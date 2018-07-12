@@ -14,7 +14,7 @@ class TimerButton extends Component {
 	start() {
 		new Promise((resolve, reject) => {
 			this.setState({ title: "Work" });
-			this.setState({ currentTime: moment().hours(0).minutes(25).seconds(0) });
+			this.setState({ currentTime: this.props.currentTime });
 			var interval = setInterval(() => {
 				this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 				if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 })))) {
@@ -44,7 +44,6 @@ class TimerButton extends Component {
 
 
 	wait() {
-		// this.setState({ title: "Rest" });
 		var lastInterval = setInterval(() => {
 			this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 			if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 }))))
@@ -62,6 +61,11 @@ class TimerButton extends Component {
 	render() {
 		return (
 			<div>
+				<div>
+					{
+						this.state.title?10<20:this.state.cunter
+					}
+				</div>
 				<div>{this.state.title}</div>
 				<div>{this.state.cunter}</div>
 				<div className="row">
