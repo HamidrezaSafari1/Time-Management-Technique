@@ -21,33 +21,35 @@ class TimerButton extends Component {
 					clearInterval(interval);
 					return resolve();
 				}
-			}, 1000);
+			}, 10);
 		}).then(() => {
-			this.setState({ currentTime: moment().hours(0).minutes(5).seconds(0) });
 			this.setState({ title: "Rest" });
 			this.setState({ cunter: this.state.cunter - 1 });
-			var restinterval = setInterval(() => {
-				this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
-				if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 })))) {
-					clearInterval(restinterval);
-					if (this.state.cunter > 0)
-						this.start();
-					else if (this.state.cunter <= 0)
-						this.wait();
-				}
-			}, 1000);
+			if (this.state.cunter <= 0) {
+				this.setState({ currentTime: moment().hours(0).minutes(30).seconds(0) });
+				this.wait();
+			} else {
+				this.setState({ currentTime: moment().hours(0).minutes(5).seconds(0) });
+				var restinterval = setInterval(() => {
+					this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
+					if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 })))) {
+						clearInterval(restinterval);
+						if (this.state.cunter > 0)
+							this.start();
+					}
+				}, 10);
+			}
 		});
 	}
 
 
 	wait() {
-		this.setState({ currentTime: moment().hours(0).minutes(30).seconds(0) });
-		this.setState({ title: "Rest" });
+		// this.setState({ title: "Rest" });
 		var lastInterval = setInterval(() => {
 			this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 			if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 }))))
 				clearInterval(lastInterval);
-		}, 1000);
+		}, 10);
 	}
 
 
