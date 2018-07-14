@@ -26,7 +26,7 @@ class TimerButton extends Component {
 					clearInterval(interval);
 					return resolve();
 				}
-			}, 100);
+			}, 1000);
 		}).then(() => {
 			mySound.play();
 			this.setState({ state: "Rest" });
@@ -46,7 +46,7 @@ class TimerButton extends Component {
 						if (this.state.cunter > 0)
 							this.start();
 					}
-				}, 100);
+				}, 1000);
 			}
 		});
 	}
@@ -57,13 +57,12 @@ class TimerButton extends Component {
 			this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 			if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 }))))
 				clearInterval(lastInterval);
-		}, 100);
+		}, 1000);
 	}
 
 
 	handleStart = () => {
 		console.clear();
-
 		this.start();
 	}
 
