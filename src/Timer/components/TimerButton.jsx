@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import buzz from 'buzz';
 
+var mySound = new buzz.sound("./sound/alarm.ogg");
 class TimerButton extends Component {
 	constructor(props) {
 		super(props);
@@ -17,20 +19,23 @@ class TimerButton extends Component {
 			this.setState({ state: "Work" });
 			this.setState({ image_src: "./img/work.png" });
 			this.setState({ currentTime: moment().hours(0).minutes(25).seconds(0) });
+			mySound.play();
 			var interval = setInterval(() => {
 				this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 				if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 })))) {
 					clearInterval(interval);
 					return resolve();
 				}
-			}, 10);
+			}, 100);
 		}).then(() => {
+			mySound.play();
 			this.setState({ state: "Rest" });
 			this.setState({ image_src: "./img/rest.png" });
 			this.setState({ cunter: this.state.cunter - 1 });
 			if (this.state.cunter <= 0) {
 				this.setState({ currentTime: moment().hours(0).minutes(30).seconds(0) });
 				clearInterval(restinterval);
+				mySound.play();
 				this.wait();
 			} else {
 				this.setState({ currentTime: moment().hours(0).minutes(5).seconds(0) });
@@ -41,7 +46,7 @@ class TimerButton extends Component {
 						if (this.state.cunter > 0)
 							this.start();
 					}
-				}, 10);
+				}, 100);
 			}
 		});
 	}
@@ -52,12 +57,13 @@ class TimerButton extends Component {
 			this.setState({ currentTime: this.state.currentTime.subtract(1, "seconds") });
 			if ((this.state.currentTime.isBefore(moment({ hour: 0, minute: 0, second: 1 }))))
 				clearInterval(lastInterval);
-		}, 10);
+		}, 100);
 	}
 
 
 	handleStart = () => {
 		console.clear();
+
 		this.start();
 	}
 
@@ -78,17 +84,17 @@ class TimerButton extends Component {
 					</div>
 				</div>
 
-					<div className="row">
-						<h1 className="d-block mx-auto">
-							{this.state.currentTime.format("HH:mm:ss")}  </h1>
-					</div>
-					<div className="button">
-						<button className="btn btn-danger d-block mx-auto" onClick={this.handleStart}>Start</button>
-					</div>
-					<hr />
+				<div className="row">
+					<h1 className="d-block mx-auto">
+						{this.state.currentTime.format("HH:mm:ss")}  </h1>
 				</div>
-				);
-			}
-		}
-		export default TimerButton;
-		
+				<div className="button">
+					<button className="btn btn-danger d-block mx-auto" onClick={this.handleStart}>Start</button>
+				</div>
+				<hr />
+			</div>
+		);
+	}
+}
+export default TimerButton;
+
